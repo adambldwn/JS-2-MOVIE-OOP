@@ -7,15 +7,16 @@ const clear = document.getElementById("clear-films");
 
 
 
-const ui = new UI();
-const storage = new Storage();
+// const ui = new UI();
+// const storage = new Storage();
+
 eventListeners();
 
 function eventListeners(){
     form.addEventListener("submit",addFilm);
     document.addEventListener("DOMContentLoaded",function(){
-        let films = storage.getFilmsFromStorage();
-        ui.loadAllFilms(films);
+        let films = Storage.getFilmsFromStorage();
+        UI.loadAllFilms(films);
     })
 
     cardBody.addEventListener("click",deleteFilm);
@@ -28,31 +29,31 @@ function addFilm(e){
     const url = urlElement.value;
 
     if(title === "" || director === "" || url === ""){
-        ui.displayMessages("tum alanlari doldurum", "danger")
+        UI.displayMessages("tum alanlari doldurum", "danger")
     }else{
         const newFilm = new Film(title,director,url);
-        ui.addFilmToUI(newFilm);
-        storage.addFilmToStorage(newFilm);
+        UI.addFilmToUI(newFilm);
+        Storage.addFilmToStorage(newFilm);
 
-        ui.displayMessages('film basariyla eklendi...',"success");
+        UI.displayMessages('film basariyla eklendi...',"success");
     }
-    ui.clearInputs(titleElement,urlElement,directorElement);
+    UI.clearInputs(titleElement,urlElement,directorElement);
 
     e.preventDefault();
 }
 
 function deleteFilm(e){
     if(e.target.id === "delete-film"){
-        ui.deleteFilmFromUI(e.target);
-        storage.deleteFilmFromStorage(e.target.parentElement.previousElement.previousElement);
-        ui.displayMessages("silme islemi basarili", "success");
+        UI.deleteFilmFromUI(e.target);
+        Storage.deleteFilmFromStorage(e.target.parentElement.previousElement.previousElement);
+        UI.displayMessages("silme islemi basarili", "success");
     }
 }
 
 function clearAllFilms(){
     if(confirm("emin misiniz ?")){
-        ui.clearAllFilmsFromUI();
-        storage.clearAllFilmsFromStorage();
+        UI.clearAllFilmsFromUI();
+        Storage.clearAllFilmsFromStorage();
     }
 
 }
